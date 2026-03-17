@@ -140,8 +140,8 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-[#e7e7e7] px-3 py-4 text-white">
-      <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
+    <main className="min-h-[100dvh] bg-[#e7e7e7] px-3 py-4 text-white">
+      <section className="mx-auto w-full max-w-[430px]">
         <div className="overflow-hidden rounded-[42px] bg-[#050505] shadow-[0_20px_80px_rgba(0,0,0,0.22)]">
           <div className="relative px-5 pt-5 pb-6">
             <div className="relative z-10 flex justify-end">
@@ -182,7 +182,7 @@ export default function Page() {
                 <h2 className="text-[18px] font-semibold text-white">
                   Quick request
                 </h2>
-                <p className="mt-2 text-[14px] leading-6 text-white/62">
+                <p className="mt-2 text-[15px] leading-6 text-white/72">
                   Fill in your details and continue
                 </p>
               </div>
@@ -242,7 +242,7 @@ export default function Page() {
                     type="checkbox"
                     className="h-5 w-5 accent-green-500"
                   />
-                  <span className="text-[14px] text-white/92">
+                  <span className="text-[15px] text-white/96">
                     WhatsApp preferred contact
                   </span>
                 </label>
@@ -265,7 +265,7 @@ export default function Page() {
                       "h-12 rounded-full text-[15px] font-semibold transition",
                       status === "student"
                         ? "bg-white text-black shadow-[0_8px_18px_rgba(255,255,255,0.12)]"
-                        : "text-white/72",
+                        : "text-white/80",
                     ].join(" ")}
                   >
                     Student
@@ -278,7 +278,7 @@ export default function Page() {
                       "h-12 rounded-full text-[15px] font-semibold transition",
                       status === "worker"
                         ? "bg-white text-black shadow-[0_8px_18px_rgba(255,255,255,0.12)]"
-                        : "text-white/72",
+                        : "text-white/80",
                     ].join(" ")}
                   >
                     Worker
@@ -363,10 +363,10 @@ function InputOnly({
         autoComplete="off"
         placeholder={placeholder}
         className={[
-          "h-14 w-full rounded-[22px] px-4 text-[15px] text-white placeholder:text-white/32 outline-none transition",
+          "h-14 w-full rounded-[22px] px-4 text-[17px] font-medium text-white placeholder:text-white/72 placeholder:font-medium outline-none transition",
           hasError
             ? "border border-red-400/70 bg-red-500/10 focus:border-red-300"
-            : "border border-white/12 bg-black/38 focus:border-white/20 focus:bg-black/46",
+            : "border border-white/18 bg-black/52 focus:border-white/30 focus:bg-black/60",
         ].join(" ")}
       />
       {hasError ? (
@@ -375,5 +375,3 @@ function InputOnly({
     </div>
   );
 }
-
-

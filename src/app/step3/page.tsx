@@ -213,7 +213,7 @@ export default function Page() {
                       onChange={(e) => handleBudgetChange(e.target.value)}
                       inputMode="numeric"
                       placeholder="350 000"
-                      className="min-w-0 flex-1 bg-transparent text-[24px] font-semibold text-white outline-none placeholder:text-white/24"
+                      className="min-w-0 flex-1 bg-transparent text-[24px] font-semibold text-white outline-none placeholder:text-white/60"
                     />
                     <span className="ml-3 text-[18px] text-white/72">Ft</span>
                   </div>
@@ -251,7 +251,7 @@ export default function Page() {
                     onChange={(e) => setOther(e.target.value)}
                     placeholder="Write here..."
                     rows={4}
-                    className="w-full rounded-[24px] border border-white/10 bg-black/40 px-4 py-4 text-[15px] text-white placeholder:text-white/28 outline-none transition focus:border-white/20"
+                    className="w-full rounded-[24px] border border-white/10 bg-black/40 px-4 py-4 text-[15px] text-white placeholder:text-white/60 outline-none transition focus:border-white/20"
                   />
                 </div>
 
@@ -308,5 +308,6 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
