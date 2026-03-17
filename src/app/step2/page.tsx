@@ -154,13 +154,13 @@ export default function Page() {
     <>
       <main className="min-h-screen bg-[#0b0b0b] px-4 py-4 text-white">
         <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
-          <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+          <div className="overflow-hidden rounded-[38px] border border-white/20 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
             <div className="px-5 pt-5 pb-6">
               <div className="flex justify-end">
                 <button
                   type="button"
                   aria-label="English language"
-                  className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/14 bg-white/[0.03] px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
+                  className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/25 bg-white/[0.03] px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
                 >
                   EN
                 </button>
@@ -176,7 +176,7 @@ export default function Page() {
                 <div className="mx-auto mt-5 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72]" />
               </div>
 
-              <section className="rounded-[30px] border border-white/10 bg-white/[0.03] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+              <section className="rounded-[30px] border border-white/20 bg-white/[0.03] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
                 <div className="space-y-7">
                   <div>
                     <h2 className="mb-3 text-[17px] font-semibold text-white">
@@ -213,7 +213,7 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setSmoking((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/10 bg-black/40 px-4"
+                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4"
                     >
                       <span className="text-[15px] text-white/90">Smoking</span>
 
@@ -235,7 +235,7 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setPet((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/10 bg-black/40 px-4"
+                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4"
                     >
                       <span className="text-[15px] text-white/90">Pet</span>
 
@@ -263,7 +263,7 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setIsCalendarOpen(true)}
-                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/10 bg-black/40 px-4 text-left transition hover:border-white/20"
+                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4 text-left transition hover:border-white/20"
                     >
                       <span className="text-[15px] text-white/88">
                         {formatDisplayDate(moveInDate)}
@@ -365,7 +365,7 @@ export default function Page() {
                     <select
                       value={roomsNeeded}
                       onChange={(e) => setRoomsNeeded(e.target.value)}
-                      className="h-[56px] w-full rounded-[24px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none"
+                      className="h-[56px] w-full rounded-[24px] border border-white/20 bg-black/40 px-4 text-[15px] text-white outline-none"
                     >
                       <option value="" className="bg-[#111] text-white">
                         Select number of rooms
@@ -386,7 +386,7 @@ export default function Page() {
                       <select
                         value={colleaguesCount}
                         onChange={(e) => setColleaguesCount(e.target.value)}
-                        className="h-[56px] w-full rounded-[24px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none"
+                        className="h-[56px] w-full rounded-[24px] border border-white/20 bg-black/40 px-4 text-[15px] text-white outline-none"
                       >
                         <option value="" className="bg-[#111] text-white">
                           Select number of colleagues
@@ -404,11 +404,11 @@ export default function Page() {
                 </div>
               </section>
 
-              <div className="sticky bottom-0 mt-6 grid grid-cols-2 gap-3 rounded-[28px] border border-white/8 bg-[#0a0a0a]/90 p-4 backdrop-blur-xl">
+              <div className="sticky bottom-0 mt-6 grid grid-cols-2 gap-3 rounded-[28px] border border-white/20 bg-[#0a0a0a]/90 p-4 backdrop-blur-xl">
                 <button
                   type="button"
                   onClick={() => router.push("/")}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/10 bg-black/40 text-[15px] font-medium text-white"
+                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/20 bg-black/40 text-[15px] font-medium text-white"
                 >
                   Back
                 </button>
@@ -428,7 +428,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-0 z-40 bg-black/55 transition",
+          "fixed inset-0 z-40 bg-white/10 transition",
           isCalendarOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         ].join(" ")}
         onClick={() => setIsCalendarOpen(false)}
@@ -436,7 +436,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-none md:max-w-none md:max-w-[430px] rounded-t-[30px] border border-white/10 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
+          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-none md:max-w-none md:max-w-[430px] rounded-t-[30px] border border-white/20 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
           isCalendarOpen ? "translate-y-0" : "translate-y-full",
         ].join(" ")}
       >
@@ -446,7 +446,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToPreviousMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/82 transition hover:bg-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/82 transition hover:bg-white/10"
           >
             ←
           </button>
@@ -456,7 +456,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToNextMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/82 transition hover:bg-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/82 transition hover:bg-white/10"
           >
             →
           </button>
@@ -506,7 +506,7 @@ export default function Page() {
               setMoveInDate(null);
               setIsCalendarOpen(false);
             }}
-            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/10 bg-white/5 text-[14px] font-medium text-white/82 transition hover:bg-white/10"
+            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/20 bg-white/5 text-[14px] font-medium text-white/82 transition hover:bg-white/10"
           >
             Clear
           </button>
@@ -523,6 +523,7 @@ export default function Page() {
     </>
   );
 }
+
 
 
 
