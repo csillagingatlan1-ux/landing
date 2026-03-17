@@ -33,7 +33,7 @@ export default function Page() {
   const [step1Data, setStep1Data] = useState<Step1Data | null>(null);
   const [step2Data, setStep2Data] = useState<Step2Data | null>(null);
 
-  const [budgetHuf, setBudgetHuf] = useState("350000");
+  const [budgetHuf, setBudgetHuf] = useState("");
   const [eurRate, setEurRate] = useState<number>(399);
   const [rateDate, setRateDate] = useState("");
   const [isLoadingRate, setIsLoadingRate] = useState(true);
@@ -52,6 +52,8 @@ export default function Page() {
       setStep1Data(null);
       setStep2Data(null);
     }
+
+    setBudgetHuf("");
   }, []);
 
   useEffect(() => {
@@ -158,6 +160,7 @@ export default function Page() {
 
     if (typeof window !== "undefined") {
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
       window.localStorage.setItem(
         "landingStep3",
         JSON.stringify({
