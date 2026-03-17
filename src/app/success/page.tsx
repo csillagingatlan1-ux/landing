@@ -20,9 +20,7 @@ export default function Page() {
         <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
           <div className="px-5 pt-5 pb-6">
             <div className="flex items-start justify-between">
-              <div className="flex h-[58px] w-[172px] items-center justify-center rounded-[18px] bg-white px-4 shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
-                
-              </div>
+              
 
               <button
                 type="button"
@@ -106,6 +104,7 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
 
