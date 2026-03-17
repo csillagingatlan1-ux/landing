@@ -170,7 +170,7 @@ export default function Page() {
                 <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
                   Your preferences
                 </h1>
-                <p className="mt-2 text-[15px] text-white/56">
+                <p className="mt-2 text-[15px] text-white/70">
                   Help us find you the perfect place
                 </p>
                 <div className="mx-auto mt-5 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72]" />
@@ -194,10 +194,10 @@ export default function Page() {
                           type="button"
                           onClick={() => setLivingWith(option.label)}
                           className={[
-                            "min-h-[92px] rounded-[24px] border px-3 py-4 transition",
+                            "min-h-[92px] rounded-[24px] border px-3 py-4 transition-all duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)]",
                             livingWith === option.label
-                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_16px_36px_rgba(141,216,145,0.22)]"
-                              : "border-white/10 bg-black/40 text-white/88",
+                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
+                              : "border-white/20 bg-white/10 text-white/92",
                           ].join(" ")}
                         >
                           <div className="mb-2 text-[20px]">{option.icon}</div>
@@ -213,7 +213,7 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setSmoking((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4"
+                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4"
                     >
                       <span className="text-[15px] text-white/90">Smoking</span>
 
@@ -235,7 +235,7 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setPet((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4"
+                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4"
                     >
                       <span className="text-[15px] text-white/90">Pet</span>
 
@@ -263,9 +263,9 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={() => setIsCalendarOpen(true)}
-                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/20 bg-black/40 px-4 text-left transition hover:border-white/20"
+                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4 text-left transition hover:border-white/20"
                     >
-                      <span className="text-[15px] text-white/88">
+                      <span className="text-[15px] text-white/92">
                         {formatDisplayDate(moveInDate)}
                       </span>
                       <span className="text-[22px] text-white/30">›</span>
@@ -285,10 +285,10 @@ export default function Page() {
                             type="button"
                             onClick={() => setDuration(option)}
                             className={[
-                              "h-[54px] rounded-[22px] border px-3 text-[14px] font-medium transition",
+                              "h-[54px] rounded-[22px] border px-3 text-[14px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                               duration === option
-                                ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_16px_36px_rgba(141,216,145,0.22)]"
-                                : "border-white/10 bg-black/40 text-white/88",
+                                ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
+                                : "border-white/20 bg-white/10 text-white/92",
                             ].join(" ")}
                           >
                             {option}
@@ -310,10 +310,10 @@ export default function Page() {
                           type="button"
                           onClick={() => setProperty(option)}
                           className={[
-                            "h-[56px] rounded-[24px] border px-4 text-[15px] font-medium transition",
+                            "h-[56px] rounded-[24px] border px-4 text-[16px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                             property === option
-                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_16px_36px_rgba(141,216,145,0.22)]"
-                              : "border-white/10 bg-black/40 text-white/88",
+                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
+                              : "border-white/20 bg-white/10 text-white/92",
                           ].join(" ")}
                         >
                           {option}
@@ -327,7 +327,7 @@ export default function Page() {
                       Location
                     </h2>
 
-                    <p className="mb-3 text-[13px] text-white/54">
+                    <p className="mb-3 text-[13px] text-white/68">
                       Choose multiple
                     </p>
 
@@ -345,10 +345,10 @@ export default function Page() {
                           type="button"
                           onClick={() => toggleLocation(location)}
                           className={[
-                            "rounded-full border px-4 py-2.5 text-[13px] font-medium transition",
+                            "rounded-full border px-4 py-2.5 text-[14px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                             locations.includes(location)
-                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_12px_28px_rgba(141,216,145,0.18)]"
-                              : "border-white/10 bg-black/40 text-white/84",
+                              ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_14px_30px_rgba(141,216,145,0.24),0_0_0_1px_rgba(255,255,255,0.06)]"
+                              : "border-white/20 bg-white/10 text-white/90",
                           ].join(" ")}
                         >
                           {location}
@@ -365,7 +365,7 @@ export default function Page() {
                     <select
                       value={roomsNeeded}
                       onChange={(e) => setRoomsNeeded(e.target.value)}
-                      className="h-[56px] w-full rounded-[24px] border border-white/20 bg-black/40 px-4 text-[15px] text-white outline-none"
+                      className="h-[56px] w-full rounded-[24px] border border-white/22 bg-white/12 px-4 text-[16px] text-white outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] focus:border-white/40 focus:bg-white/14 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.35)]"
                     >
                       <option value="" className="bg-[#111] text-white">
                         Select number of rooms
@@ -386,7 +386,7 @@ export default function Page() {
                       <select
                         value={colleaguesCount}
                         onChange={(e) => setColleaguesCount(e.target.value)}
-                        className="h-[56px] w-full rounded-[24px] border border-white/20 bg-black/40 px-4 text-[15px] text-white outline-none"
+                        className="h-[56px] w-full rounded-[24px] border border-white/22 bg-white/12 px-4 text-[16px] text-white outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] focus:border-white/40 focus:bg-white/14 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.35)]"
                       >
                         <option value="" className="bg-[#111] text-white">
                           Select number of colleagues
@@ -408,7 +408,7 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={() => router.push("/")}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/20 bg-black/40 text-[15px] font-medium text-white"
+                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/22 bg-white/10 text-[16px] font-medium text-white transition-all duration-200 hover:bg-white/14"
                 >
                   Back
                 </button>
@@ -416,7 +416,7 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={handleContinue}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-[15px] font-semibold text-black shadow-[0_16px_36px_rgba(141,216,145,0.24)]"
+                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_16px_36px_rgba(141,216,145,0.24)]"
                 >
                   Continue →
                 </button>
@@ -490,7 +490,7 @@ export default function Page() {
                     ? "bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_10px_26px_rgba(141,216,145,0.18)]"
                     : isToday
                     ? "border border-[#d8dd72]/50 bg-white/5 text-white"
-                    : "bg-white/5 text-white/84 hover:bg-white/10",
+                    : "bg-white/5 text-white/90 hover:bg-white/10",
                 ].join(" ")}
               >
                 {date.getDate()}
@@ -523,6 +523,7 @@ export default function Page() {
     </>
   );
 }
+
 
 
 

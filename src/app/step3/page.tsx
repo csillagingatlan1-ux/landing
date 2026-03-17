@@ -195,7 +195,7 @@ export default function Page() {
               <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
                 Your preferences
               </h1>
-              <p className="mt-2 text-[15px] text-white/56">Step 3 of 3</p>
+              <p className="mt-2 text-[15px] text-white/70">Step 3 of 3</p>
               <div className="mx-auto mt-5 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72]" />
             </div>
 
@@ -206,7 +206,7 @@ export default function Page() {
                     Financial budget
                   </h2>
 
-                  <div className="flex h-[62px] items-center rounded-[24px] border border-white/20 bg-black/40 px-4">
+                  <div className="flex h-[62px] items-center rounded-[24px] border border-white/20 bg-white/10 px-4">
                     <span className="mr-3 text-[18px] text-white/90">Ft</span>
                     <input
                       value={formattedHuf}
@@ -223,7 +223,7 @@ export default function Page() {
                       € {formattedEur}
                     </div>
 
-                    <div className="mt-2 text-[18px] font-medium text-white/78">
+                    <div className="mt-2 text-[18px] font-medium text-white/86">
                       Exchange rate: {isLoadingRate ? "Loading..." : rateLabel}
                     </div>
 
@@ -251,12 +251,12 @@ export default function Page() {
                     onChange={(e) => setOther(e.target.value)}
                     placeholder="Write here..."
                     rows={4}
-                    className="w-full rounded-[24px] border border-white/20 bg-black/40 px-4 py-4 text-[15px] text-white placeholder:text-white/60 outline-none transition focus:border-white/20"
+                    className="w-full rounded-[24px] border border-white/20 bg-white/10 px-4 py-4 text-[15px] text-white placeholder:text-white/60 outline-none transition focus:border-white/20"
                   />
                 </div>
 
-                <div className="rounded-[26px] border border-white/20 bg-black/20 p-4">
-                  <div className="space-y-4 text-[15px] text-white/88">
+                <div className="rounded-[26px] border border-white/20 bg-white/5 p-4">
+                  <div className="space-y-4 text-[15px] text-white/92">
                     <ServiceRow text="EN communication" />
                     <ServiceRow text="Help with address card and residence permit administration" />
                     <ServiceRow text="Remote photo / video viewing" />
@@ -271,7 +271,7 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={() => router.push("/step2")}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/20 bg-black/40 text-[15px] font-medium text-white"
+                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/22 bg-white/10 text-[16px] font-medium text-white transition-all duration-200 hover:bg-white/14"
                 >
                   Back
                 </button>
@@ -285,7 +285,7 @@ export default function Page() {
                 </button>
               </div>
 
-              <div className="mt-3 text-center leading-5 text-white/58">
+              <div className="mt-3 text-center leading-5 text-white/72">
                 <div className="text-[13px] font-medium">STAR REAL ESTATE AGENCY</div>
                 <div className="text-[13px]">Debrecen</div>
                 <div className="text-[13px]">csillagingatlan1@gmail.com</div>
@@ -308,6 +308,7 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
 
