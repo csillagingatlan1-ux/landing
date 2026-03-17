@@ -152,15 +152,15 @@ export default function Page() {
 
   return (
     <>
-      <main className="min-h-screen bg-[#0b0b0b] px-4 py-4 text-white">
-        <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
-          <div className="overflow-hidden rounded-[38px] border border-white/20 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+      <main className="min-h-[100dvh] bg-[#0b0b0b] px-4 py-4 text-white">
+        <section className="mx-auto w-full max-w-[430px]">
+          <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
             <div className="px-5 pt-5 pb-6">
               <div className="flex justify-end">
                 <button
                   type="button"
                   aria-label="English language"
-                  className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/25 bg-white/[0.03] px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
+                  className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/20 bg-white/[0.03] px-4 text-[16px] font-semibold text-white backdrop-blur-sm"
                 >
                   EN
                 </button>
@@ -170,16 +170,16 @@ export default function Page() {
                 <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
                   Your preferences
                 </h1>
-                <p className="mt-2 text-[15px] text-white/70">
+                <p className="mt-2 text-[16px] text-white/70">
                   Help us find you the perfect place
                 </p>
                 <div className="mx-auto mt-5 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72]" />
               </div>
 
-              <section className="rounded-[30px] border border-white/20 bg-white/[0.03] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+              <section className="rounded-[30px] border border-white/20 bg-white/[0.05] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
                 <div className="space-y-7">
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       Who would you live with?
                     </h2>
 
@@ -194,10 +194,10 @@ export default function Page() {
                           type="button"
                           onClick={() => setLivingWith(option.label)}
                           className={[
-                            "min-h-[92px] rounded-[24px] border px-3 py-4 transition-all duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)]",
+                            "min-h-[92px] rounded-[24px] border px-3 py-4 transition-all duration-200 hover:-translate-y-[1px]",
                             livingWith === option.label
                               ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
-                              : "border-white/20 bg-white/10 text-white/92",
+                              : "border-white/22 bg-white/10 text-white/92 hover:bg-white/12",
                           ].join(" ")}
                         >
                           <div className="mb-2 text-[20px]">{option.icon}</div>
@@ -210,70 +210,38 @@ export default function Page() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
+                    <ToggleCard
+                      label="Smoking"
+                      value={smoking}
                       onClick={() => setSmoking((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4"
-                    >
-                      <span className="text-[15px] text-white/90">Smoking</span>
+                    />
 
-                      <span
-                        className={[
-                          "relative h-6 w-11 rounded-full transition",
-                          smoking ? "bg-[#9be37c]" : "bg-white/18",
-                        ].join(" ")}
-                      >
-                        <span
-                          className={[
-                            "absolute top-[2px] h-5 w-5 rounded-full bg-white transition",
-                            smoking ? "left-[22px]" : "left-[2px]",
-                          ].join(" ")}
-                        />
-                      </span>
-                    </button>
-
-                    <button
-                      type="button"
+                    <ToggleCard
+                      label="Pet"
+                      value={pet}
                       onClick={() => setPet((prev) => !prev)}
-                      className="flex h-[60px] items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4"
-                    >
-                      <span className="text-[15px] text-white/90">Pet</span>
-
-                      <span
-                        className={[
-                          "relative h-6 w-11 rounded-full transition",
-                          pet ? "bg-[#9be37c]" : "bg-white/18",
-                        ].join(" ")}
-                      >
-                        <span
-                          className={[
-                            "absolute top-[2px] h-5 w-5 rounded-full bg-white transition",
-                            pet ? "left-[22px]" : "left-[2px]",
-                          ].join(" ")}
-                        />
-                      </span>
-                    </button>
+                    />
                   </div>
 
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       From when?
                     </h2>
 
                     <button
                       type="button"
                       onClick={() => setIsCalendarOpen(true)}
-                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/20 bg-white/10 px-4 text-left transition hover:border-white/20"
+                      className="flex h-[60px] w-full items-center justify-between rounded-[24px] border border-white/22 bg-white/12 px-4 text-left text-[16px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-200 hover:bg-white/14"
                     >
-                      <span className="text-[15px] text-white/92">
+                      <span className="text-white/92">
                         {formatDisplayDate(moveInDate)}
                       </span>
-                      <span className="text-[22px] text-white/30">›</span>
+                      <span className="text-[22px] text-white/40">›</span>
                     </button>
                   </div>
 
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       How long?
                     </h2>
 
@@ -288,7 +256,7 @@ export default function Page() {
                               "h-[54px] rounded-[22px] border px-3 text-[14px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                               duration === option
                                 ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
-                                : "border-white/20 bg-white/10 text-white/92",
+                                : "border-white/22 bg-white/10 text-white/92 hover:bg-white/12",
                             ].join(" ")}
                           >
                             {option}
@@ -299,7 +267,7 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       What are you looking for?
                     </h2>
 
@@ -313,7 +281,7 @@ export default function Page() {
                             "h-[56px] rounded-[24px] border px-4 text-[16px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                             property === option
                               ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
-                              : "border-white/20 bg-white/10 text-white/92",
+                              : "border-white/22 bg-white/10 text-white/92 hover:bg-white/12",
                           ].join(" ")}
                         >
                           {option}
@@ -323,11 +291,11 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       Location
                     </h2>
 
-                    <p className="mb-3 text-[13px] text-white/68">
+                    <p className="mb-3 text-[14px] text-white/68">
                       Choose multiple
                     </p>
 
@@ -348,7 +316,7 @@ export default function Page() {
                             "rounded-full border px-4 py-2.5 text-[14px] font-medium transition-all duration-200 hover:-translate-y-[1px]",
                             locations.includes(location)
                               ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_14px_30px_rgba(141,216,145,0.24),0_0_0_1px_rgba(255,255,255,0.06)]"
-                              : "border-white/20 bg-white/10 text-white/90",
+                              : "border-white/22 bg-white/10 text-white/92 hover:bg-white/12",
                           ].join(" ")}
                         >
                           {location}
@@ -358,7 +326,7 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <h2 className="mb-3 text-[17px] font-semibold text-white">
+                    <h2 className="mb-3 text-[18px] font-semibold text-white">
                       Rooms needed
                     </h2>
 
@@ -379,7 +347,7 @@ export default function Page() {
 
                   {isWorker ? (
                     <div>
-                      <h2 className="mb-3 text-[17px] font-semibold text-white">
+                      <h2 className="mb-3 text-[18px] font-semibold text-white">
                         Colleagues count
                       </h2>
 
@@ -404,22 +372,24 @@ export default function Page() {
                 </div>
               </section>
 
-              <div className="sticky bottom-0 mt-6 grid grid-cols-2 gap-3 rounded-[28px] border border-white/20 bg-[#0a0a0a]/90 p-4 backdrop-blur-xl">
-                <button
-                  type="button"
-                  onClick={() => router.push("/")}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/22 bg-white/10 text-[16px] font-medium text-white transition-all duration-200 hover:bg-white/14"
-                >
-                  Back
-                </button>
+              <div className="sticky bottom-[max(12px,env(safe-area-inset-bottom))] mt-6 rounded-[28px] border border-white/20 bg-[rgba(10,10,10,0.86)] p-4 backdrop-blur-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.28)]">
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => router.push("/")}
+                    className="flex h-[58px] items-center justify-center rounded-[24px] border border-white/22 bg-white/10 text-[16px] font-medium text-white transition-all duration-200 hover:bg-white/14"
+                  >
+                    Back
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={handleContinue}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_16px_36px_rgba(141,216,145,0.24)]"
-                >
-                  Continue →
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleContinue}
+                    className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_18px_40px_rgba(141,216,145,0.28)]"
+                  >
+                    Continue →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -428,7 +398,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-0 z-40 bg-white/10 transition",
+          "fixed inset-0 z-40 bg-black/55 transition",
           isCalendarOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         ].join(" ")}
         onClick={() => setIsCalendarOpen(false)}
@@ -436,7 +406,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-none md:max-w-none md:max-w-[430px] rounded-t-[30px] border border-white/20 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
+          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[430px] rounded-t-[30px] border border-white/20 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
           isCalendarOpen ? "translate-y-0" : "translate-y-full",
         ].join(" ")}
       >
@@ -446,7 +416,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToPreviousMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/82 transition hover:bg-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 transition hover:bg-white/15"
           >
             ←
           </button>
@@ -456,13 +426,13 @@ export default function Page() {
           <button
             type="button"
             onClick={goToNextMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/82 transition hover:bg-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 transition hover:bg-white/15"
           >
             →
           </button>
         </div>
 
-        <div className="mb-2 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-[0.14em] text-white/38">
+        <div className="mb-2 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-[0.14em] text-white/42">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
             <div key={day}>{day}</div>
           ))}
@@ -489,8 +459,8 @@ export default function Page() {
                     : isSelected
                     ? "bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_10px_26px_rgba(141,216,145,0.18)]"
                     : isToday
-                    ? "border border-[#d8dd72]/50 bg-white/5 text-white"
-                    : "bg-white/5 text-white/90 hover:bg-white/10",
+                    ? "border border-[#d8dd72]/50 bg-white/10 text-white"
+                    : "bg-white/10 text-white/88 hover:bg-white/15",
                 ].join(" ")}
               >
                 {date.getDate()}
@@ -506,7 +476,7 @@ export default function Page() {
               setMoveInDate(null);
               setIsCalendarOpen(false);
             }}
-            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/20 bg-white/5 text-[14px] font-medium text-white/82 transition hover:bg-white/10"
+            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/20 bg-white/10 text-[14px] font-medium text-white/88 transition hover:bg-white/14"
           >
             Clear
           </button>
@@ -524,7 +494,41 @@ export default function Page() {
   );
 }
 
+function ToggleCard({
+  label,
+  value,
+  onClick,
+}: {
+  label: string;
+  value: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={[
+        "flex h-[60px] items-center justify-between rounded-[24px] border px-4 transition-all duration-200 hover:-translate-y-[1px]",
+        value
+          ? "border-transparent bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_18px_40px_rgba(141,216,145,0.28),0_0_0_1px_rgba(255,255,255,0.08)]"
+          : "border-white/22 bg-white/10 text-white/92 hover:bg-white/12",
+      ].join(" ")}
+    >
+      <span className="text-[16px] font-medium">{label}</span>
 
-
-
-
+      <span
+        className={[
+          "relative h-7 w-12 rounded-full transition-all duration-200",
+          value ? "bg-black/20" : "bg-white/20",
+        ].join(" ")}
+      >
+        <span
+          className={[
+            "absolute top-[2px] h-6 w-6 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.22)] transition-all duration-200",
+            value ? "left-[22px]" : "left-[2px]",
+          ].join(" ")}
+        />
+      </span>
+    </button>
+  );
+}

@@ -177,15 +177,15 @@ export default function Page() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0b0b0b] px-4 py-4 text-white">
-      <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
-        <div className="overflow-hidden rounded-[38px] border border-white/20 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+    <main className="min-h-[100dvh] bg-[#0b0b0b] px-4 py-4 text-white">
+      <section className="mx-auto w-full max-w-[430px]">
+        <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
           <div className="px-5 pt-5 pb-6">
             <div className="flex justify-end">
               <button
                 type="button"
                 aria-label="English language"
-                className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/25 bg-white/[0.03] px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
+                className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/20 bg-white/[0.03] px-4 text-[16px] font-semibold text-white backdrop-blur-sm"
               >
                 EN
               </button>
@@ -199,23 +199,23 @@ export default function Page() {
               <div className="mx-auto mt-5 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72]" />
             </div>
 
-            <section className="rounded-[30px] border border-white/20 bg-white/[0.03] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+            <section className="rounded-[30px] border border-white/20 bg-white/[0.05] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
               <div className="space-y-6">
                 <div>
-                  <h2 className="mb-3 text-[17px] font-semibold text-white">
+                  <h2 className="mb-3 text-[18px] font-semibold text-white">
                     Financial budget
                   </h2>
 
-                  <div className="flex h-[62px] items-center rounded-[24px] border border-white/20 bg-white/10 px-4">
-                    <span className="mr-3 text-[18px] text-white/90">Ft</span>
+                  <div className="flex h-[62px] items-center rounded-[24px] border border-white/22 bg-white/12 px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <span className="mr-3 text-[18px] text-white/78">Ft</span>
                     <input
                       value={formattedHuf}
                       onChange={(e) => handleBudgetChange(e.target.value)}
                       inputMode="numeric"
                       placeholder="350 000"
-                      className="min-w-0 flex-1 bg-transparent text-[24px] font-semibold text-white outline-none placeholder:text-white/60"
+                      className="min-w-0 flex-1 bg-transparent text-[24px] font-semibold text-white placeholder:text-white/55 outline-none [font-size:16px] sm:[font-size:24px]"
                     />
-                    <span className="ml-3 text-[18px] text-white/90">Ft</span>
+                    <span className="ml-3 text-[18px] text-white/78">Ft</span>
                   </div>
 
                   <div className="mt-4">
@@ -228,13 +228,13 @@ export default function Page() {
                     </div>
 
                     {rateDate ? (
-                      <div className="mt-1 text-[13px] text-white/44">
+                      <div className="mt-1 text-[14px] text-white/50">
                         Updated: {rateDate}
                       </div>
                     ) : null}
                   </div>
 
-                  <p className="mt-4 text-[14px] leading-7 text-white/64">
+                  <p className="mt-4 text-[15px] leading-7 text-white/72">
                     Important note: the calculated amount does not include possible
                     bank conversion fees or property operating costs such as water,
                     electricity and other utilities.
@@ -242,7 +242,7 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <h2 className="mb-3 text-[17px] font-semibold text-white">
+                  <h2 className="mb-3 text-[18px] font-semibold text-white">
                     Other
                   </h2>
 
@@ -251,11 +251,11 @@ export default function Page() {
                     onChange={(e) => setOther(e.target.value)}
                     placeholder="Write here..."
                     rows={4}
-                    className="w-full rounded-[24px] border border-white/20 bg-white/10 px-4 py-4 text-[15px] text-white placeholder:text-white/60 outline-none transition focus:border-white/20"
+                    className="w-full rounded-[24px] border border-white/22 bg-white/12 px-4 py-4 text-[16px] text-white placeholder:text-white/55 outline-none transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] focus:border-white/40 focus:bg-white/14 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.35)]"
                   />
                 </div>
 
-                <div className="rounded-[26px] border border-white/20 bg-white/5 p-4">
+                <div className="rounded-[26px] border border-white/18 bg-white/5 p-4">
                   <div className="space-y-4 text-[15px] text-white/92">
                     <ServiceRow text="EN communication" />
                     <ServiceRow text="Help with address card and residence permit administration" />
@@ -266,7 +266,7 @@ export default function Page() {
               </div>
             </section>
 
-            <div className="sticky bottom-0 mt-6 rounded-[28px] border border-white/20 bg-[#0a0a0a]/90 p-4 backdrop-blur-xl">
+            <div className="sticky bottom-[max(12px,env(safe-area-inset-bottom))] mt-6 rounded-[28px] border border-white/20 bg-[rgba(10,10,10,0.86)] p-4 backdrop-blur-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.28)]">
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -279,16 +279,16 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={handleSend}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] px-3 text-center text-[15px] font-semibold text-black shadow-[0_16px_36px_rgba(141,216,145,0.24)]"
+                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] px-3 text-center text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_18px_40px_rgba(141,216,145,0.28)]"
                 >
                   Küldés WhatsApp / e-mail
                 </button>
               </div>
 
               <div className="mt-3 text-center leading-5 text-white/72">
-                <div className="text-[13px] font-medium">STAR REAL ESTATE AGENCY</div>
-                <div className="text-[13px]">Debrecen</div>
-                <div className="text-[13px]">csillagingatlan1@gmail.com</div>
+                <div className="text-[14px] font-medium">STAR REAL ESTATE AGENCY</div>
+                <div className="text-[14px]">Debrecen</div>
+                <div className="text-[14px]">csillagingatlan1@gmail.com</div>
               </div>
             </div>
           </div>
@@ -308,8 +308,3 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
-
-
-
-
-
