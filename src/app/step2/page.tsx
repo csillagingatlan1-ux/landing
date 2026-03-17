@@ -406,7 +406,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[430px] rounded-t-[30px] border border-white/20 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
+          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[430px] rounded-t-[30px] border border-white/20 bg-[#141414] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
           isCalendarOpen ? "translate-y-0" : "translate-y-full",
         ].join(" ")}
       >
@@ -416,7 +416,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToPreviousMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 transition hover:bg-white/15"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/14 text-white/92 transition hover:bg-white/18"
           >
             ←
           </button>
@@ -426,13 +426,13 @@ export default function Page() {
           <button
             type="button"
             onClick={goToNextMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 transition hover:bg-white/15"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/14 text-white/92 transition hover:bg-white/18"
           >
             →
           </button>
         </div>
 
-        <div className="mb-2 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-[0.14em] text-white/42">
+        <div className="mb-2 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-[0.14em] text-white/56">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
             <div key={day}>{day}</div>
           ))}
@@ -459,8 +459,8 @@ export default function Page() {
                     : isSelected
                     ? "bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] text-black shadow-[0_10px_26px_rgba(141,216,145,0.18)]"
                     : isToday
-                    ? "border border-[#d8dd72]/50 bg-white/10 text-white"
-                    : "bg-white/10 text-white/88 hover:bg-white/15",
+                    ? "border border-[#d8dd72]/60 bg-white/16 text-white"
+                    : "bg-white/14 text-white/92 hover:bg-white/18",
                 ].join(" ")}
               >
                 {date.getDate()}
@@ -476,7 +476,7 @@ export default function Page() {
               setMoveInDate(null);
               setIsCalendarOpen(false);
             }}
-            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/20 bg-white/10 text-[14px] font-medium text-white/88 transition hover:bg-white/14"
+            className="flex h-[52px] items-center justify-center rounded-[20px] border border-white/24 bg-white/14 text-[14px] font-medium text-white/92 transition hover:bg-white/18"
           >
             Clear
           </button>
@@ -532,3 +532,4 @@ function ToggleCard({
     </button>
   );
 }
+
