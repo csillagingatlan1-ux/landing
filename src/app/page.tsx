@@ -366,7 +366,7 @@ function InputOnly({
           "h-14 w-full rounded-[22px] px-4 text-[17px] font-medium text-white placeholder:text-white/72 placeholder:font-medium outline-none transition",
           hasError
             ? "border border-red-400/70 bg-red-500/10 focus:border-red-300"
-            : "border border-white/18 bg-black/52 focus:border-white/30 focus:bg-black/60",
+            : "border border-white/18 bg-white/10 focus:border-white/30 focus:bg-white/15",
         ].join(" ")}
       />
       {hasError ? (
@@ -375,4 +375,5 @@ function InputOnly({
     </div>
   );
 }
+
 
