@@ -141,7 +141,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-[#e7e7e7] px-3 py-4 text-white">
-      <section className="mx-auto w-full max-w-[430px]">
+      <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
         <div className="overflow-hidden rounded-[42px] bg-[#050505] shadow-[0_20px_80px_rgba(0,0,0,0.22)]">
           <div className="relative px-5 pt-5 pb-6">
             <div className="relative z-10 flex justify-end">
@@ -375,3 +375,5 @@ function InputOnly({
     </div>
   );
 }
+
+

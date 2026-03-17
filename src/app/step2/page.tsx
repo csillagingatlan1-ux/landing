@@ -153,7 +153,7 @@ export default function Page() {
   return (
     <>
       <main className="min-h-screen bg-[#0b0b0b] px-4 py-4 text-white">
-        <section className="mx-auto w-full max-w-[430px]">
+        <section className="mx-auto w-full max-w-none md:max-w-none md:max-w-[430px]">
           <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
             <div className="px-5 pt-5 pb-6">
               <div className="flex justify-end">
@@ -436,7 +436,7 @@ export default function Page() {
 
       <div
         className={[
-          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[430px] rounded-t-[30px] border border-white/10 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
+          "fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-none md:max-w-none md:max-w-[430px] rounded-t-[30px] border border-white/10 bg-[#0a0a0a] p-5 shadow-[0_-20px_60px_rgba(0,0,0,0.45)] transition-transform duration-300",
           isCalendarOpen ? "translate-y-0" : "translate-y-full",
         ].join(" ")}
       >
@@ -523,3 +523,5 @@ export default function Page() {
     </>
   );
 }
+
+
