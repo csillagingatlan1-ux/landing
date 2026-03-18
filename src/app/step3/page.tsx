@@ -273,7 +273,7 @@ export default function Page() {
                   onClick={handleSend}
                   className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] px-3 text-center text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_18px_40px_rgba(141,216,145,0.28)]"
                 >
-                  Küldés WhatsApp / e-mail
+                  Küldés
                 </button>
               </div>
 
@@ -300,4 +300,5 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
