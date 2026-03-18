@@ -145,13 +145,7 @@ export default function Page() {
         <div className="overflow-hidden rounded-[42px] bg-[#050505] shadow-[0_20px_80px_rgba(0,0,0,0.22)]">
           <div className="relative px-5 pt-5 pb-6">
             <div className="relative z-10 flex justify-end">
-              <button
-                type="button"
-                aria-label="English language"
-                className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/20 bg-black/15 px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
-              >
-                EN
-              </button>
+              
             </div>
 
             <div className="relative z-10 mt-4 overflow-hidden rounded-[30px]">
@@ -375,5 +369,6 @@ function InputOnly({
     </div>
   );
 }
+
 
 

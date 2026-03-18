@@ -181,15 +181,7 @@ export default function Page() {
       <section className="mx-auto w-full max-w-[430px]">
         <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
           <div className="px-5 pt-5 pb-6">
-            <div className="flex justify-end">
-              <button
-                type="button"
-                aria-label="English language"
-                className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/20 bg-white/[0.03] px-4 text-[16px] font-semibold text-white backdrop-blur-sm"
-              >
-                EN
-              </button>
-            </div>
+            
 
             <div className="mb-7 mt-8 text-center">
               <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
@@ -308,3 +300,4 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+

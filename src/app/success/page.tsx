@@ -22,13 +22,7 @@ export default function Page() {
             <div className="flex items-start justify-between">
               
 
-              <button
-                type="button"
-                aria-label="English language"
-                className="inline-flex h-[58px] min-w-[58px] items-center justify-center rounded-[18px] border border-white/14 bg-white/[0.03] px-4 text-[15px] font-semibold text-white backdrop-blur-sm"
-              >
-                EN
-              </button>
+              
             </div>
 
             <div className="mt-10 text-center">
@@ -104,6 +98,7 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
 
