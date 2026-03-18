@@ -119,7 +119,7 @@ export default function Page() {
     setBudgetHuf(digits);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const lines = [
       "Hello STAR REAL ESTATE AGENCY!",
       "",
@@ -158,9 +158,25 @@ export default function Page() {
     const whatsappText = encodeURIComponent(lines.join("\n"));
     const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
 
-    if (typeof window !== "undefined") {
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    const emailRes = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: lines.join("\n"),
+      }),
+    });
 
+    const emailJson = await emailRes.json();
+
+    if (!emailRes.ok || !emailJson?.success) {
+      console.error("Email sending failed:", emailJson);
+      alert("Az email küldés nem sikerült. Ellenőrizd a Vercel env változókat és a Gmail app jelszót.");
+      return;
+    }
+
+    if (typeof window !== "undefined") {
       window.localStorage.setItem(
         "landingStep3",
         JSON.stringify({
@@ -171,6 +187,8 @@ export default function Page() {
           other,
         })
       );
+
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     }
 
     router.push("/success");
@@ -300,5 +318,6 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
