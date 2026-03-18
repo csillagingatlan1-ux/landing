@@ -1,5 +1,5 @@
-﻿import nodemailer from "nodemailer";
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export async function POST(req: Request) {
   try {
@@ -12,39 +12,36 @@ export async function POST(req: Request) {
       );
     }
 
-    const user = process.env.EMAIL_USER;
-    const pass = process.env.EMAIL_PASS;
+    const apiKey = process.env.RESEND_API_KEY;
+    const from = process.env.RESEND_FROM;
 
-    if (!user || !pass) {
+    if (!apiKey) {
       return NextResponse.json(
-        { success: false, error: "Missing EMAIL_USER or EMAIL_PASS" },
+        { success: false, error: "Missing RESEND_API_KEY" },
         { status: 500 }
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user,
-        pass,
-      },
-    });
+    if (!from) {
+      return NextResponse.json(
+        { success: false, error: "Missing RESEND_FROM" },
+        { status: 500 }
+      );
+    }
 
-    await transporter.verify();
+    const resend = new Resend(apiKey);
 
-    const info = await transporter.sendMail({
-      from: `"STAR Real Estate Agency" <${user}>`,
-      to: "csillagingatlan1@gmail.com",
-      replyTo: user,
+    const data = await resend.emails.send({
+      from,
+      to: ["csillagingatlan1@gmail.com"],
       subject: "New apartment request",
       text: message,
+      replyTo: "csillagingatlan1@gmail.com",
     });
 
     return NextResponse.json({
       success: true,
-      messageId: info.messageId,
+      data,
     });
   } catch (error) {
     const message =
