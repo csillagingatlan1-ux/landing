@@ -172,7 +172,7 @@ export default function Page() {
 
     if (!emailRes.ok || !emailJson?.success) {
       console.error("Email sending failed:", emailJson);
-      alert("Az email küldés nem sikerült. Ellenőrizd a Vercel env változókat és a Gmail app jelszót.");
+      alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket a .env.local fájlban és a Vercelben.");
       return;
     }
 
@@ -318,6 +318,7 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
+
 
 
 
