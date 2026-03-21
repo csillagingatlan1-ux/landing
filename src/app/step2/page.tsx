@@ -7,6 +7,41 @@ type Step1Data = {
   status?: "student" | "worker";
 };
 
+type Step2Data = {
+  livingWith: string;
+  smoking: boolean;
+  pet: boolean;
+  moveInDate: string;
+  duration: string;
+  property: string;
+  locations: string[];
+  roomsNeeded: string;
+  colleaguesCount: string;
+};
+
+const STEP1_STORAGE_KEY = "landingStep1";
+const STEP2_STORAGE_KEY = "landingStep2";
+
+function formatDateForStorage(date: Date | null) {
+  if (!date) return "";
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}.${mm}.${dd}`;
+}
+
+function parseStoredDate(value: string) {
+  if (!value) return null;
+
+  if (/^\d{4}\.\d{2}\.\d{2}$/.test(value)) {
+    const [y, m, d] = value.split(".").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
 export default function Page() {
   const router = useRouter();
 
@@ -30,14 +65,29 @@ export default function Page() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const raw = window.localStorage.getItem("landingStep1");
-    if (!raw) return;
+    const step1Raw = window.localStorage.getItem(STEP1_STORAGE_KEY);
+    const step2Raw = window.localStorage.getItem(STEP2_STORAGE_KEY);
 
     try {
-      const parsed = JSON.parse(raw) as Step1Data;
-      setStep1Data(parsed);
+      if (step1Raw) {
+        const parsed = JSON.parse(step1Raw) as Step1Data;
+        setStep1Data(parsed);
+      }
+
+      if (step2Raw) {
+        const parsed = JSON.parse(step2Raw) as Partial<Step2Data>;
+        setLivingWith(parsed.livingWith ?? "");
+        setSmoking(parsed.smoking ?? false);
+        setPet(parsed.pet ?? false);
+        setMoveInDate(parseStoredDate(parsed.moveInDate ?? ""));
+        setDuration(parsed.duration ?? "");
+        setProperty(parsed.property ?? "");
+        setLocations(parsed.locations ?? []);
+        setRoomsNeeded(parsed.roomsNeeded ?? "");
+        setColleaguesCount(parsed.colleaguesCount ?? "");
+      }
     } catch {
-      setStep1Data(null);
+      window.localStorage.removeItem(STEP2_STORAGE_KEY);
     }
   }, []);
 
@@ -58,12 +108,7 @@ export default function Page() {
 
   const formatDisplayDate = (date: Date | null) => {
     if (!date) return "Select date";
-
-    return date.toLocaleDateString("en-GB", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+    return formatDateForStorage(date);
   };
 
   const isSameDay = (a: Date | null, b: Date | null) => {
@@ -131,20 +176,19 @@ export default function Page() {
 
   const handleContinue = () => {
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "landingStep2",
-        JSON.stringify({
-          livingWith,
-          smoking,
-          pet,
-          moveInDate: moveInDate ? moveInDate.toISOString() : "",
-          duration,
-          property,
-          locations,
-          roomsNeeded,
-          colleaguesCount,
-        })
-      );
+      const payload: Step2Data = {
+        livingWith,
+        smoking,
+        pet,
+        moveInDate: formatDateForStorage(moveInDate),
+        duration,
+        property,
+        locations,
+        roomsNeeded,
+        colleaguesCount,
+      };
+
+      window.localStorage.setItem(STEP2_STORAGE_KEY, JSON.stringify(payload));
     }
 
     router.push("/step3");
@@ -156,8 +200,6 @@ export default function Page() {
         <section className="mx-auto w-full max-w-[430px]">
           <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
             <div className="px-5 pt-5 pb-6">
-              
-
               <div className="mb-7 mt-8 text-center">
                 <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
                   Your preferences
@@ -408,7 +450,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToPreviousMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/14 text-white/92 transition hover:bg-white/18"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/24 bg-white/14 text-white/92 transition hover:bg-white/18"
           >
             ←
           </button>
@@ -418,7 +460,7 @@ export default function Page() {
           <button
             type="button"
             onClick={goToNextMonth}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/14 text-white/92 transition hover:bg-white/18"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/24 bg-white/14 text-white/92 transition hover:bg-white/18"
           >
             →
           </button>
@@ -524,5 +566,3 @@ function ToggleCard({
     </button>
   );
 }
-
-

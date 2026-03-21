@@ -26,6 +26,20 @@ const EMPTY_TOUCHED: TouchedState = {
   department: false,
 };
 
+type Step1Data = {
+  fullName: string;
+  countryOfOrigin: string;
+  spokenLanguage: string;
+  phoneNumber: string;
+  whatsAppPreferred: boolean;
+  email: string;
+  status: StatusType;
+  university: string;
+  department: string;
+};
+
+const STEP1_STORAGE_KEY = "landingStep1";
+
 export default function Page() {
   const router = useRouter();
 
@@ -40,26 +54,61 @@ export default function Page() {
   const [department, setDepartment] = useState("");
   const [showErrors, setShowErrors] = useState(false);
   const [touched, setTouched] = useState<TouchedState>(EMPTY_TOUCHED);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    window.localStorage.removeItem("landingStep1");
-    window.localStorage.removeItem("landingStep2");
-    window.localStorage.removeItem("landingStep3");
+    const saved = window.localStorage.getItem(STEP1_STORAGE_KEY);
 
-    setFullName("");
-    setCountryOfOrigin("");
-    setSpokenLanguage("");
-    setPhoneNumber("");
-    setWhatsAppPreferred(true);
-    setEmail("");
-    setStatus("student");
-    setUniversity("");
-    setDepartment("");
-    setShowErrors(false);
-    setTouched(EMPTY_TOUCHED);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as Partial<Step1Data>;
+        setFullName(parsed.fullName ?? "");
+        setCountryOfOrigin(parsed.countryOfOrigin ?? "");
+        setSpokenLanguage(parsed.spokenLanguage ?? "");
+        setPhoneNumber(parsed.phoneNumber ?? "");
+        setWhatsAppPreferred(parsed.whatsAppPreferred ?? true);
+        setEmail(parsed.email ?? "");
+        setStatus(parsed.status ?? "student");
+        setUniversity(parsed.university ?? "");
+        setDepartment(parsed.department ?? "");
+      } catch {
+        window.localStorage.removeItem(STEP1_STORAGE_KEY);
+      }
+    }
+
+    setIsHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (!isHydrated || typeof window === "undefined") return;
+
+    const payload: Step1Data = {
+      fullName,
+      countryOfOrigin,
+      spokenLanguage,
+      phoneNumber,
+      whatsAppPreferred,
+      email,
+      status,
+      university,
+      department,
+    };
+
+    window.localStorage.setItem(STEP1_STORAGE_KEY, JSON.stringify(payload));
+  }, [
+    fullName,
+    countryOfOrigin,
+    spokenLanguage,
+    phoneNumber,
+    whatsAppPreferred,
+    email,
+    status,
+    university,
+    department,
+    isHydrated,
+  ]);
 
   const isStudent = status === "student";
 
@@ -120,20 +169,19 @@ export default function Page() {
     if (!isFormValid) return;
 
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "landingStep1",
-        JSON.stringify({
-          fullName,
-          countryOfOrigin,
-          spokenLanguage,
-          phoneNumber,
-          whatsAppPreferred,
-          email,
-          status,
-          university,
-          department,
-        })
-      );
+      const payload: Step1Data = {
+        fullName,
+        countryOfOrigin,
+        spokenLanguage,
+        phoneNumber,
+        whatsAppPreferred,
+        email,
+        status,
+        university,
+        department,
+      };
+
+      window.localStorage.setItem(STEP1_STORAGE_KEY, JSON.stringify(payload));
     }
 
     router.push("/step2");
@@ -144,10 +192,6 @@ export default function Page() {
       <section className="mx-auto w-full max-w-[430px]">
         <div className="overflow-hidden rounded-[42px] bg-[#050505] shadow-[0_20px_80px_rgba(0,0,0,0.22)]">
           <div className="relative px-5 pt-5 pb-6">
-            <div className="relative z-10 flex justify-end">
-              
-            </div>
-
             <div className="relative z-10 mt-4 overflow-hidden rounded-[30px]">
               <div className="relative h-[430px] w-full">
                 <img
@@ -357,10 +401,10 @@ function InputOnly({
         autoComplete="off"
         placeholder={placeholder}
         className={[
-          "h-14 w-full rounded-[22px] px-4 text-[17px] font-medium text-white placeholder:text-white/72 placeholder:font-medium outline-none transition",
+          "h-14 w-full rounded-[22px] px-4 text-[17px] font-medium text-white placeholder:text-white/72 placeholder:font-medium outline-none transition-all duration-200",
           hasError
             ? "border border-red-400/70 bg-red-500/10 focus:border-red-300"
-            : "border border-white/18 bg-white/10 focus:border-white/30 focus:bg-white/15",
+            : "border border-white/20 bg-white/10 focus:border-white/50 focus:bg-white/15 focus:shadow-[0_0_0_2px_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.6)]",
         ].join(" ")}
       />
       {hasError ? (
@@ -369,6 +413,3 @@ function InputOnly({
     </div>
   );
 }
-
-
-

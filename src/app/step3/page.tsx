@@ -27,6 +27,10 @@ type Step2Data = {
   colleaguesCount?: string;
 };
 
+const STEP1_STORAGE_KEY = "landingStep1";
+const STEP2_STORAGE_KEY = "landingStep2";
+const STEP3_STORAGE_KEY = "landingStep3";
+
 export default function Page() {
   const router = useRouter();
 
@@ -38,22 +42,27 @@ export default function Page() {
   const [rateDate, setRateDate] = useState("");
   const [isLoadingRate, setIsLoadingRate] = useState(true);
   const [other, setOther] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const step1Raw = window.localStorage.getItem("landingStep1");
-    const step2Raw = window.localStorage.getItem("landingStep2");
+    const step1Raw = window.localStorage.getItem(STEP1_STORAGE_KEY);
+    const step2Raw = window.localStorage.getItem(STEP2_STORAGE_KEY);
+    const step3Raw = window.localStorage.getItem(STEP3_STORAGE_KEY);
 
     try {
       if (step1Raw) setStep1Data(JSON.parse(step1Raw) as Step1Data);
       if (step2Raw) setStep2Data(JSON.parse(step2Raw) as Step2Data);
-    } catch {
-      setStep1Data(null);
-      setStep2Data(null);
-    }
 
-    setBudgetHuf("");
+      if (step3Raw) {
+        const parsed = JSON.parse(step3Raw) as { budgetHuf?: string; other?: string };
+        setBudgetHuf((parsed.budgetHuf ?? "").replace(/[^\d]/g, ""));
+        setOther(parsed.other ?? "");
+      }
+    } catch {
+      window.localStorage.removeItem(STEP3_STORAGE_KEY);
+    }
   }, []);
 
   useEffect(() => {
@@ -86,6 +95,18 @@ export default function Page() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    window.localStorage.setItem(
+      STEP3_STORAGE_KEY,
+      JSON.stringify({
+        budgetHuf,
+        other,
+      })
+    );
+  }, [budgetHuf, other]);
 
   const numericBudgetHuf = useMemo(() => {
     const digits = budgetHuf.replace(/[^\d]/g, "");
@@ -120,6 +141,13 @@ export default function Page() {
   };
 
   const handleSend = async () => {
+    if (!step1Data || !step2Data) {
+      alert("Missing form data. Please go back and complete the previous steps.");
+      return;
+    }
+
+    setIsSending(true);
+
     const lines = [
       "Hello STAR REAL ESTATE AGENCY!",
       "",
@@ -129,69 +157,75 @@ export default function Page() {
       `Estimated EUR: € ${formattedEur}`,
       `Exchange rate: ${rateLabel}`,
       "",
-      `Name: ${step1Data?.fullName || "-"}`,
-      `Country: ${step1Data?.countryOfOrigin || "-"}`,
-      `Language: ${step1Data?.spokenLanguage || "-"}`,
-      `Phone: ${step1Data?.phoneNumber || "-"}`,
-      `Email: ${step1Data?.email || "-"}`,
-      `Status: ${step1Data?.status || "-"}`,
-      step1Data?.status === "student"
-        ? `University: ${step1Data?.university || "-"}`
+      `Name: ${step1Data.fullName || "-"}`,
+      `Country: ${step1Data.countryOfOrigin || "-"}`,
+      `Language: ${step1Data.spokenLanguage || "-"}`,
+      `Phone: ${step1Data.phoneNumber || "-"}`,
+      `Email: ${step1Data.email || "-"}`,
+      `Status: ${step1Data.status || "-"}`,
+      step1Data.status === "student"
+        ? `University: ${step1Data.university || "-"}`
         : `University: -`,
-      step1Data?.status === "student"
-        ? `Department: ${step1Data?.department || "-"}`
+      step1Data.status === "student"
+        ? `Department: ${step1Data.department || "-"}`
         : `Department: -`,
       "",
-      `Living with: ${step2Data?.livingWith || "-"}`,
-      `Smoking: ${step2Data?.smoking ? "Yes" : "No"}`,
-      `Pet: ${step2Data?.pet ? "Yes" : "No"}`,
-      `Move-in date: ${step2Data?.moveInDate || "-"}`,
-      `Duration: ${step2Data?.duration || "-"}`,
-      `Property type: ${step2Data?.property || "-"}`,
-      `Locations: ${step2Data?.locations?.join(", ") || "-"}`,
-      `Rooms needed: ${step2Data?.roomsNeeded || "-"}`,
-      `Colleagues count: ${step2Data?.colleaguesCount || "-"}`,
+      `Living with: ${step2Data.livingWith || "-"}`,
+      `Smoking: ${step2Data.smoking ? "Yes" : "No"}`,
+      `Pet: ${step2Data.pet ? "Yes" : "No"}`,
+      `Move-in date: ${step2Data.moveInDate || "-"}`,
+      `Duration: ${step2Data.duration || "-"}`,
+      `Property type: ${step2Data.property || "-"}`,
+      `Locations: ${step2Data.locations?.join(", ") || "-"}`,
+      `Rooms needed: ${step2Data.roomsNeeded || "-"}`,
+      `Colleagues count: ${step2Data.colleaguesCount || "-"}`,
       "",
       `Other: ${other || "-"}`,
     ];
 
-    const whatsappText = encodeURIComponent(lines.join("\n"));
-    const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
+    try {
+      const emailRes = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          adminMessage: lines.join("\n"),
+          customerEmail: step1Data.email || "",
+          customerName: step1Data.fullName || "",
+        }),
+      });
 
-    const emailRes = await fetch("/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: lines.join("\n"),
-      }),
-    });
+      const emailJson = await emailRes.json();
 
-    const emailJson = await emailRes.json();
+      if (!emailRes.ok || !emailJson?.success) {
+        console.error("Email sending failed:", emailJson);
+        alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket a .env.local fájlban és a Vercelben.");
+        setIsSending(false);
+        return;
+      }
 
-    if (!emailRes.ok || !emailJson?.success) {
-      console.error("Email sending failed:", emailJson);
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(STEP1_STORAGE_KEY);
+        window.localStorage.removeItem(STEP2_STORAGE_KEY);
+        window.localStorage.removeItem(STEP3_STORAGE_KEY);
+
+        if (step1Data.whatsAppPreferred && step1Data.phoneNumber) {
+          const whatsappText = encodeURIComponent(
+            `Hello! Thank you for your request. We received your inquiry and will contact you soon. - STAR REAL ESTATE AGENCY`
+          );
+
+          const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
+          window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+        }
+      }
+
+      router.push("/success");
+    } catch (error) {
+      console.error("Email sending failed:", error);
       alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket a .env.local fájlban és a Vercelben.");
-      return;
+      setIsSending(false);
     }
-
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "landingStep3",
-        JSON.stringify({
-          budgetHuf: formattedHuf,
-          estimatedEur: formattedEur,
-          rateLabel,
-          rateDate,
-          other,
-        })
-      );
-
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-    }
-
-    router.push("/success");
   };
 
   return (
@@ -199,8 +233,6 @@ export default function Page() {
       <section className="mx-auto w-full max-w-[430px]">
         <div className="overflow-hidden rounded-[38px] border border-white/8 bg-[#070707] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
           <div className="px-5 pt-5 pb-6">
-            
-
             <div className="mb-7 mt-8 text-center">
               <h1 className="text-[29px] font-semibold tracking-[-0.03em] text-white">
                 Your preferences
@@ -289,9 +321,10 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={handleSend}
-                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] px-3 text-center text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_18px_40px_rgba(141,216,145,0.28)]"
+                  disabled={isSending}
+                  className="flex h-[58px] items-center justify-center rounded-[24px] bg-gradient-to-r from-[#6ad0c5] via-[#8fd08d] to-[#d8dd72] px-3 text-center text-[16px] font-semibold text-black transition-all duration-200 hover:brightness-105 active:scale-[0.99] shadow-[0_18px_40px_rgba(141,216,145,0.28)] disabled:opacity-60"
                 >
-                  Küldés
+                  {isSending ? "Sending..." : "Küldés"}
                 </button>
               </div>
 
@@ -318,7 +351,3 @@ function ServiceRow({ text }: { text: string }) {
     </div>
   );
 }
-
-
-
-
