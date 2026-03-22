@@ -39,8 +39,10 @@ export async function POST(req: Request) {
       replyTo: customerEmail || "csillagingatlan1@gmail.com",
     });
 
+    let customerResult = null;
+
     if (customerEmail && typeof customerEmail === "string") {
-      await resend.emails.send({
+      customerResult = await resend.emails.send({
         from,
         to: [customerEmail],
         subject: "We received your request - STAR REAL ESTATE AGENCY",
@@ -73,6 +75,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       adminResult,
+      customerResult,
     });
   } catch (error) {
     const message =

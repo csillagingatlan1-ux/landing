@@ -382,7 +382,7 @@ export default function Page() {
                   {isWorker ? (
                     <div>
                       <h2 className="mb-3 text-[18px] font-semibold text-white">
-                        Colleagues count
+                        Number of colleagues
                       </h2>
 
                       <select
@@ -566,3 +566,4 @@ function ToggleCard({
     </button>
   );
 }
+

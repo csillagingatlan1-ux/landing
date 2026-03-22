@@ -24,7 +24,7 @@ type Step2Data = {
   property?: string;
   locations?: string[];
   roomsNeeded?: string;
-  colleaguesCount?: string;
+  numberofcolleagues?: string;
 };
 
 const STEP1_STORAGE_KEY = "landingStep1";
@@ -178,7 +178,7 @@ export default function Page() {
       `Property type: ${step2Data.property || "-"}`,
       `Locations: ${step2Data.locations?.join(", ") || "-"}`,
       `Rooms needed: ${step2Data.roomsNeeded || "-"}`,
-      `Colleagues count: ${step2Data.colleaguesCount || "-"}`,
+      `Number of colleagues: ${step2Data.numberofcolleagues || "-"}`,
       "",
       `Other: ${other || "-"}`,
     ];
@@ -200,30 +200,25 @@ export default function Page() {
 
       if (!emailRes.ok || !emailJson?.success) {
         console.error("Email sending failed:", emailJson);
-        alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket a .env.local fájlban és a Vercelben.");
+        alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket.");
         setIsSending(false);
         return;
       }
 
       if (typeof window !== "undefined") {
+        const whatsappText = encodeURIComponent(lines.join("\n"));
+        const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
         window.localStorage.removeItem(STEP1_STORAGE_KEY);
         window.localStorage.removeItem(STEP2_STORAGE_KEY);
         window.localStorage.removeItem(STEP3_STORAGE_KEY);
-
-        if (step1Data.whatsAppPreferred && step1Data.phoneNumber) {
-          const whatsappText = encodeURIComponent(
-            `Hello! Thank you for your request. We received your inquiry and will contact you soon. - STAR REAL ESTATE AGENCY`
-          );
-
-          const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
-          window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-        }
       }
 
       router.push("/success");
     } catch (error) {
       console.error("Email sending failed:", error);
-      alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket a .env.local fájlban és a Vercelben.");
+      alert("Az email küldés nem sikerült.");
       setIsSending(false);
     }
   };
@@ -296,15 +291,6 @@ export default function Page() {
                     className="w-full rounded-[24px] border border-white/22 bg-white/12 px-4 py-4 text-[16px] text-white placeholder:text-white/55 outline-none transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] focus:border-white/40 focus:bg-white/14 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.35)]"
                   />
                 </div>
-
-                <div className="rounded-[26px] border border-white/18 bg-white/5 p-4">
-                  <div className="space-y-4 text-[15px] text-white/92">
-                    <ServiceRow text="EN communication" />
-                    <ServiceRow text="Help with address card and residence permit administration" />
-                    <ServiceRow text="Remote photo / video viewing" />
-                    <ServiceRow text="Fast full-service process until apartment handover" />
-                  </div>
-                </div>
               </div>
             </section>
 
@@ -327,27 +313,10 @@ export default function Page() {
                   {isSending ? "Sending..." : "Küldés"}
                 </button>
               </div>
-
-              <div className="mt-3 text-center leading-5 text-white/72">
-                <div className="text-[14px] font-medium">STAR REAL ESTATE AGENCY</div>
-                <div className="text-[14px]">Debrecen</div>
-                <div className="text-[14px]">csillagingatlan1@gmail.com</div>
-              </div>
             </div>
           </div>
         </div>
       </section>
     </main>
-  );
-}
-
-function ServiceRow({ text }: { text: string }) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="mt-[2px] inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#8fd08d] text-[14px] font-bold text-black">
-        ✓
-      </span>
-      <span className="flex-1 leading-6">{text}</span>
-    </div>
   );
 }
