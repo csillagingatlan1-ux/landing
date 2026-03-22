@@ -1,9 +1,24 @@
 ﻿import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+type CrmLead = {
+  consent: boolean;
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+  companyWebsite?: string;
+  formTs?: number;
+};
+
 export async function POST(req: Request) {
   try {
-    const { adminMessage, customerEmail, customerName } = await req.json();
+    const { adminMessage, customerEmail, customerName, crmLead } = (await req.json()) as {
+      adminMessage?: string;
+      customerEmail?: string;
+      customerName?: string;
+      crmLead?: CrmLead;
+    };
 
     if (!adminMessage || typeof adminMessage !== "string") {
       return NextResponse.json(
@@ -14,6 +29,7 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.RESEND_FROM;
+    const crmUrl = process.env.CRM_PUBLIC_LEADS_URL;
 
     if (!apiKey) {
       return NextResponse.json(
@@ -72,10 +88,29 @@ export async function POST(req: Request) {
       });
     }
 
+    let crmResult: { ok: boolean; status?: number | null } | null = null;
+
+    if (crmUrl && crmLead) {
+      const crmRes = await fetch(crmUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(crmLead),
+        cache: "no-store",
+      });
+
+      crmResult = {
+        ok: crmRes.ok,
+        status: crmRes.status,
+      };
+    }
+
     return NextResponse.json({
       success: true,
       adminResult,
       customerResult,
+      crmResult,
     });
   } catch (error) {
     const message =

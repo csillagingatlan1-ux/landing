@@ -24,12 +24,13 @@ type Step2Data = {
   property?: string;
   locations?: string[];
   roomsNeeded?: string;
-  numberofcolleagues?: string;
+  colleaguesCount?: string;
 };
 
 const STEP1_STORAGE_KEY = "landingStep1";
 const STEP2_STORAGE_KEY = "landingStep2";
 const STEP3_STORAGE_KEY = "landingStep3";
+const FLOW_STARTED_AT_KEY = "landingFlowStartedAt";
 
 export default function Page() {
   const router = useRouter();
@@ -62,6 +63,11 @@ export default function Page() {
       }
     } catch {
       window.localStorage.removeItem(STEP3_STORAGE_KEY);
+    }
+
+    const startedAt = window.localStorage.getItem(FLOW_STARTED_AT_KEY);
+    if (!startedAt) {
+      window.localStorage.setItem(FLOW_STARTED_AT_KEY, String(Date.now()));
     }
   }, []);
 
@@ -148,7 +154,7 @@ export default function Page() {
 
     setIsSending(true);
 
-    const lines = [
+    const adminLines = [
       "Hello STAR REAL ESTATE AGENCY!",
       "",
       "Apartment request summary:",
@@ -178,47 +184,72 @@ export default function Page() {
       `Property type: ${step2Data.property || "-"}`,
       `Locations: ${step2Data.locations?.join(", ") || "-"}`,
       `Rooms needed: ${step2Data.roomsNeeded || "-"}`,
-      `Number of colleagues: ${step2Data.numberofcolleagues || "-"}`,
+      `Number of colleagues: ${step2Data.colleaguesCount || "-"}`,
       "",
       `Other: ${other || "-"}`,
     ];
 
     try {
+      const startedAtRaw =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem(FLOW_STARTED_AT_KEY)
+          : null;
+
+      const startedAt = startedAtRaw ? Number(startedAtRaw) : Date.now();
+      const formTs = Math.max(1000, Date.now() - startedAt);
+
+      const crmMessage = [
+        `Source: debrecenrentals.com`,
+        `Channel: landing`,
+        ``,
+        ...adminLines,
+      ].join("\n");
+
       const emailRes = await fetch("/api/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          adminMessage: lines.join("\n"),
+          adminMessage: adminLines.join("\n"),
           customerEmail: step1Data.email || "",
           customerName: step1Data.fullName || "",
+          crmLead: {
+            consent: true,
+            name: step1Data.fullName || "",
+            email: step1Data.email || "",
+            phone: step1Data.phoneNumber || "",
+            message: crmMessage,
+            companyWebsite: "",
+            formTs,
+          },
         }),
       });
 
       const emailJson = await emailRes.json();
 
       if (!emailRes.ok || !emailJson?.success) {
-        console.error("Email sending failed:", emailJson);
-        alert("Az email küldés nem sikerült. Ellenőrizd a RESEND_API_KEY és RESEND_FROM értékeket.");
+        console.error("Send failed:", emailJson);
+        alert("A küldés nem sikerült. Ellenőrizd az email és CRM beállításokat.");
         setIsSending(false);
         return;
       }
 
       if (typeof window !== "undefined") {
-        const whatsappText = encodeURIComponent(lines.join("\n"));
+        const whatsappText = encodeURIComponent(adminLines.join("\n"));
         const whatsappUrl = `https://wa.me/36304600201?text=${whatsappText}`;
         window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
         window.localStorage.removeItem(STEP1_STORAGE_KEY);
         window.localStorage.removeItem(STEP2_STORAGE_KEY);
         window.localStorage.removeItem(STEP3_STORAGE_KEY);
+        window.localStorage.removeItem(FLOW_STARTED_AT_KEY);
       }
 
       router.push("/success");
     } catch (error) {
-      console.error("Email sending failed:", error);
-      alert("Az email küldés nem sikerült.");
+      console.error("Send failed:", error);
+      alert("A küldés nem sikerült.");
       setIsSending(false);
     }
   };
@@ -270,12 +301,6 @@ export default function Page() {
                       </div>
                     ) : null}
                   </div>
-
-                  <p className="mt-4 text-[15px] leading-7 text-white/72">
-                    Important note: the calculated amount does not include possible
-                    bank conversion fees or property operating costs such as water,
-                    electricity and other utilities.
-                  </p>
                 </div>
 
                 <div>
