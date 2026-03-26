@@ -126,10 +126,7 @@ export default function Page() {
       nextErrors.email = "Please enter a valid email address.";
     }
 
-    if (isStudent) {
-      if (university.trim().length < 2) nextErrors.university = "University is required for students.";
-      if (department.trim().length < 2) nextErrors.department = "Department is required for students.";
-    }
+    
 
     return nextErrors;
   }, [
@@ -413,3 +410,4 @@ function InputOnly({
     </div>
   );
 }
+
